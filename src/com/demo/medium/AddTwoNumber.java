@@ -8,7 +8,7 @@ public class AddTwoNumber {
 		
         ListNode node1 = new ListNode(2);
         node1.next = new ListNode(4);
-        node1.next.next = new ListNode(3);
+        node1.next.next = new ListNode(9);
 
         ListNode node2 = new ListNode(5);
         node2.next = new ListNode(6);
@@ -37,17 +37,23 @@ public class AddTwoNumber {
     }
     
     public static ListNode foreach(ListNode node1,ListNode node2,ListNode node3) {
-    	node3.next = new ListNode(0);
+    	
     	if(node1!=null && node2!=null) {
     		int sum = node1.val + node2.val; 
     		if(sum >= 10) {
-    			node3.val = sum-10;
-    			node3.next.val++;
+    			node3.val += sum-10;
+    			node3.next = new ListNode(1);
     		} else {
-    			node3.val = sum;
+    			node3.val += sum;
     		}
+    		if(node1.next!=null && node2.next!=null) {
+    			if(node3.next == null) {
+    				
+    				node3.next = new ListNode(0);
+    			}
+    			foreach(node1.next, node2.next, node3.next);
     		
-    		foreach(node1.next, node2.next, node3.next);
+    		}
     	} else if(node1!=null && node2==null) {
     		int sum = node1.val;
     		if(sum >= 10) {
@@ -55,7 +61,9 @@ public class AddTwoNumber {
     		} else {
     			node3.val = node1.val;
     		}
-    		foreach(node1.next, null, node3.next);
+    		if(node1.next != null) {
+    	   		foreach(node1.next, null, node3.next);
+    		}
     	} else if(node1==null && node2!=null) {
     		int sum = node2.val;
     		if(sum >= 10) {
@@ -63,17 +71,10 @@ public class AddTwoNumber {
     		} else {
     			node3.val = node2.val;
     		}
-    		foreach(null, node2.next, node3.next);
-    	} else {
-    		int sum = node3.val++;
-    		
-    		if(sum >= 10) {
-    			node3.val = sum-10;
-    		} else {
-    			node3.val = sum;
+    		if(node2.next != null) {
+    	   		foreach(null, node2.next, node3.next);
     		}
     	}
-    	
     	
     	return node3;
     	
